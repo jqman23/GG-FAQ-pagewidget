@@ -13,11 +13,25 @@
     return '$' + n.toLocaleString('en-US');
   }
 
+  function setTierClass(n, slider) {
+    const groupContent = slider.closest('.groupContent');
+    if (!groupContent) return;
+    groupContent.classList.remove('tierSmall', 'tierMedium', 'tierLarge');
+    if (n >= 50) {
+      groupContent.classList.add('tierLarge');
+    } else if (n >= 30) {
+      groupContent.classList.add('tierMedium');
+    } else {
+      groupContent.classList.add('tierSmall');
+    }
+  }
+
   // ── Group slider ────────────────────────────────────────
   function updateGroupSlider() {
     const slider = document.getElementById('groupSlider');
     if (!slider) return;
-    const n    = +slider.value;
+    const n = +slider.value;
+    setTierClass(n, slider);
     const rate = groupRate(n);
     const indiv = n * INDIV;
     const total = n * rate;
